@@ -41,9 +41,12 @@ contract ERC20Token is ERC20Interface {
             balances[msg.sender] >= _value,
             "Insufficient funds for transfer source."
         );
+
         balances[msg.sender] -= _value;
+
         balances[_to] += _value;
         emit Transfer(msg.sender, _to, _value); //solhint-disable-line indent, no-unused-vars
+
         return true;
     }
 
@@ -54,16 +57,20 @@ contract ERC20Token is ERC20Interface {
         uint256 _value
     ) public override returns (bool success) {
         uint256 allowance = allowed[_from][msg.sender];
+
         require(
             balances[_from] >= _value && allowance >= _value,
             "Insufficient allowed funds for transfer source."
         );
+
         balances[_to] += _value;
         balances[_from] -= _value;
+
         if (allowance < MAX_UINT256) {
             allowed[_from][msg.sender] -= _value;
         }
         emit Transfer(_from, _to, _value); //solhint-disable-line indent, no-unused-vars
+
         return true;
     }
 
@@ -84,7 +91,9 @@ contract ERC20Token is ERC20Interface {
         returns (bool success)
     {
         allowed[msg.sender][_spender] = _value;
+
         emit Approval(msg.sender, _spender, _value); //solhint-disable-line indent, no-unused-vars
+
         return true;
     }
 

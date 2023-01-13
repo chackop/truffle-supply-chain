@@ -44,7 +44,9 @@
 // require('dotenv').config();
 // const { MNEMONIC, PROJECT_ID } = process.env;
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+
+const mnemonic = "YOUR MNEMONIC FROM YOUR WALLET (MetaMask)";
 
 module.exports = {
   /**
@@ -68,6 +70,28 @@ module.exports = {
       host: "127.0.0.1", // Localhost (default: none)
       port: 7545, // Standard Ethereum port (default: none)
       network_id: "*", // Any network (default: none)
+    },
+    goerli: {
+      provider: function () {
+        return new HDWalletProvider(
+          mnemonic,
+          "https://goerli.infura.io/v3/<INFURA_PROJECT_ID>"
+        );
+      },
+      network_id: 3,
+      gas: 4500000, // Gas sent with each transaction (default: ~6700000)
+      gasPrice: 20000000000, // 20 gwei (in wei) (default: 100 gwei)
+    },
+    live: {
+      provider: function () {
+        return new HDWalletProvider(
+          mnemonic,
+          "https://mainnet.infura.io/v3/<INFURA_PROJECT_ID>"
+        );
+      },
+      network_id: 1,
+      gas: 7500000, // Gas sent with each transaction (default: ~6700000)
+      gasPrice: 20000000000, // 20 gwei (in wei) (default: 100 gwei)
     },
     //
     // An additional network, but with some advanced options…
